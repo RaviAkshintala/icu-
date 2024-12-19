@@ -1,11 +1,26 @@
-# Copyright (C) 2016 and later: Unicode, Inc. and others.
-# License & terms of use: http://www.unicode.org/copyright.html
-#
-# GitHub Action configuration script for ICU continuous integration tasks.
-
 name: GHA ICU4C
 
-on: [push,pull_request]
+on:
+  push:
+    branches:
+      - test
+    paths:
+      - 'icu4c/**'
+      - 'testdata/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: '**'
+    paths:
+      - 'icu4c/**'
+      - 'testdata/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+    # To trigger the Env Test workflow manually, follow the instructions in
+    # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
+    inputs:
+      gitReleaseTag:
+        description: 'Release tag to upload to. Must start with "release-"'
+        type: string
  
 
 # For non-release branches (namely: PRs), only run CI on the most recent commit. Cancel
